@@ -178,7 +178,7 @@ Spectrum PathTracing::li( const Ray& ray , const PixelSample& ps , const Scene& 
             float       path_pdf;
             Vector      wi;
             Spectrum f;
-            BsdfSample  _bsdf_sample = BsdfSample(rc);
+            BsdfSample  _bsdf_sample = BsdfSample(rc, Ray(inter.intersect, r.m_Dir));
             f = se.Sample_BSDF( -r.m_Dir , wi , _bsdf_sample , path_pdf, rc);
             if( ( f.IsBlack() || path_pdf == 0.0f ) )
                 break;
@@ -198,8 +198,14 @@ Spectrum PathTracing::li( const Ray& ray , const PixelSample& ps , const Scene& 
             if( 0.0f == throughput.GetIntensity() )
                 break;
             
-            r.m_Ori = inter.intersect;
-            r.m_Dir = wi;
+            if (_bsdf_sample.ray->m_Updated) { // For curved/stitched spaces
+                r.m_Ori = _bsdf_sample.ray->m_Ori;
+                r.m_Dir = _bsdf_sample.ray->m_Dir;
+            }
+            else {
+                r.m_Ori = inter.intersect;
+                r.m_Dir = wi;
+            }
             r.m_fMin = 0.0001f;
         }else{
             // Strictly speaking, it should consider the possibility of crossing a volume when exit from the other point of the SSS object.

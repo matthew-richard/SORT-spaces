@@ -25,6 +25,7 @@ Ray::Ray(){
     m_fPdfA = 0.0f;
     m_we = 0.0f;
     m_fCosAtCamera = 0.0f;
+    m_Updated = false;
 }
 
 Ray::Ray( const Point& p , const Vector& dir , unsigned depth , float fmin , float fmax){
@@ -37,6 +38,7 @@ Ray::Ray( const Point& p , const Vector& dir , unsigned depth , float fmin , flo
     m_fPdfA = 0.0f;
     m_we = 0.0f;
     m_fCosAtCamera = 0.0f;
+    m_Updated = false;
 }
 
 Ray::Ray( const Ray& r ){
@@ -49,4 +51,5 @@ Ray::Ray( const Ray& r ){
     m_fPdfA = r.m_fPdfA;
     m_we = r.m_we;
     m_fCosAtCamera = r.m_fCosAtCamera;
+    m_Updated = false;
 }

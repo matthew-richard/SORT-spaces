@@ -124,6 +124,9 @@ Spectrum ScatteringEvent::Sample_BSDF( const Vector& wo , Vector& wi , const cla
 
     // transform the direction back
     wi = localToWorld( wi );
+    if (bs.ray && bs.ray->m_Updated) {
+        bs.ray->m_Dir = localToWorld(bs.ray->m_Dir);
+    }
     
     return ret;
 }

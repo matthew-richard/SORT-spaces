@@ -329,6 +329,12 @@ Spectrum MicroFacetReflection::sample_f( const Vector& wo , Vector& wi , const B
     // reflect the incident direction
     wi = reflect( wo , wh );
 
+    if (bs.ray) {
+        bs.ray->m_Dir = wi;
+        bs.ray->m_Ori = bs.ray->m_Ori + Point(3, 0, 3);
+        bs.ray->m_Updated = true;
+    }    
+
     if (pPdf) *pPdf = pdf(wo, wi);
 
     if (!SameHemiSphere(wo, wi)) return 0.0f;

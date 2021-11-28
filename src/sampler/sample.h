@@ -22,6 +22,7 @@
 #include "core/define.h"
 #include "core/rand.h"
 #include "core/define.h"
+#include <math/ray.h>
 
 // Light Sample
 class   LightSample
@@ -56,17 +57,26 @@ public:
 
     float   preserved;  // a preserved data for memory alignment
 
+    // For curved/stitched spaces
+    Ray* ray; 
+
     // default constructor
     BsdfSample(){
         t = 0.0f;
         v = 0.0f;
         u = 0.0f;
+        ray = NULL;
     }
 
     BsdfSample(RenderContext& rc){
         t = sort_rand<float>(rc);
         u = sort_rand<float>(rc);
         v = sort_rand<float>(rc);
+        ray = NULL;
+    }
+
+    BsdfSample(RenderContext& rc, Ray& r) : BsdfSample(rc) {
+        ray = &r;
     }
 };
 

@@ -90,4 +90,7 @@ public:
 
     mutable int     m_local_x , m_local_y , m_local_z;  /**< Id used to identify axis in local coordinate. */
     mutable float   m_scale_x , m_scale_y , m_scale_z;  /**< Scaling along each axis in local coordinate. */
+
+    // For curved/stitched spaces
+    bool m_Updated;
 };
